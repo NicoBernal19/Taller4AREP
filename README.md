@@ -12,7 +12,7 @@ Para demostrar las capacidades reflexivas de Java, se implementará un prototipo
 
 ### Paso a paso para la instalacion, compilacion y ejecucion del proyecto
 
-Clona este repositorio y navega al directorio donde clonaste el proyecto:
+Lo primero que debes hacer es clonar este repositorio y navegar al directorio donde lo clonaste:
 
 ```
 git clone https://github.com/NicoBernal19/Taller3AREP.git
@@ -45,8 +45,6 @@ Entre las funcionalidades que se ofrecen encontramos las siguientes:
 
 ### Pruebas Unitarias
 
-Antes que nada debo dejar claro que hay algunas pruebas que requieren que el servidor este corriendo para que funcionen, por lo tanto sugiero ejecutar primero el servidor y luego si ejecutar las pruebas.
-
 Para poder ejecutar las pruebas con las que cuenta este proyecto ejecuta el siguiente comando:
 
 ```
@@ -61,8 +59,6 @@ A continuacion se encuentran imagenes de la ejecucion de las pruebas:
 
 ![imagen](src/main/resources/images/3.png)
 
-![imagen](src/main/resources/images/4.png)
-
 ### Pruebas en tiempo real
 
 Puedes abrir tu navegador y acceder al siguiente enlace, para poder explorar y probar la aplicacion web:
@@ -72,6 +68,8 @@ http://localhost:35000
 ```
 
 Una vez abierto el servidor web puedes navegar la pagina, probando las distintas funcionalidades. A continuacion encontramos algunos ejemplos de acciones que se pueden hacer:
+
+![imagen](src/main/resources/images/4.png)
 
 ![imagen](src/main/resources/images/5.png)
 
@@ -83,9 +81,19 @@ Por otro lado, puedes dirigirte al siguiente enlace (o uno similar) para probar 
 http://localhost:35000/hello?name=nicolas
 ```
 
+Si prefieres tambien puedes dirigirte a los demas endpoints disponibles para darles un vistazo:
+
+```
+http://localhost:35000/random?min=1&max=18 (Puedes cambiar los parametros a tu gusto)
+http://localhost:35000/greeting
+http://localhost:35000/later
+http://localhost:35000/pi
+http://localhost:35000/e
+```
+
 ### Pruebas archivos estáticos
 
-Prueba a acceder a los siguientes archivos:
+Finalmente, tambien puedes probar a acceder a los archivos estaticos con los que cuenta el proyecto:
 
 ```
 http://localhost:35000/index.html
