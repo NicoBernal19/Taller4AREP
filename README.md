@@ -24,10 +24,10 @@ Construte y tambien compila el proyecto con Maven:
 mvn clean install
 ```
 
-Ejecuta la aplicacion, corre la clase principal para iniciar el servidor:
+Ejecuta la aplicacion:
 
 ```
-mvn exec:java -Dexec.mainClass="co.edu.eci.arep.WebFramework"
+ java -cp target/classes co.edu.eci.arep.webframework.WebFramework
 ```
 
 El servidor esta hecho para que inicie en el puerto `35000`, una vez ejecutado, ya esta listo para que puedas usarlo y probarlo todo lo que desees.
