@@ -58,8 +58,8 @@ public class WebServer {
 
     public boolean handleServiceRequest(String method, String path, OutputStream out) throws IOException {
         String[] parts = path.split("\\?");
-        String routePath = parts[0]; // La ruta sin los parámetros
-        String query = parts.length > 1 ? parts[1] : null; // Los parámetros de la consulta
+        String routePath = parts[0];
+        String query = parts.length > 1 ? parts[1] : null;
 
         Method routeMethod = AnnotationProcessor.getRoute(routePath);
         if (routeMethod != null) {
@@ -70,16 +70,14 @@ public class WebServer {
                 if (query != null) {
                     Map<String, String> queryParams = getQueryParams(query);
 
-                    // Obtener los tipos de parámetros esperados por el método
                     Class<?>[] paramTypes = routeMethod.getParameterTypes();
                     Object[] args = new Object[paramTypes.length];
 
-                    // Obtener los nombres de los parámetros desde las anotaciones (en lugar de getName())
                     String[] paramNames = AnnotationProcessor.getParameterNames(routeMethod);
 
                     for (int i = 0; i < paramTypes.length; i++) {
-                        String paramName = paramNames[i]; // Nombre del parámetro esperado
-                        String paramValue = queryParams.get(paramName); // Obtener el valor del parámetro en la URL
+                        String paramName = paramNames[i];
+                        String paramValue = queryParams.get(paramName);
 
                         if (paramValue != null) {
                             if (paramTypes[i] == int.class) {
@@ -87,10 +85,9 @@ public class WebServer {
                             } else if (paramTypes[i] == double.class) {
                                 args[i] = Double.parseDouble(paramValue);
                             } else {
-                                args[i] = paramValue; // Si es String, asignarlo directamente
+                                args[i] = paramValue;
                             }
                         } else {
-                            // Si no hay un valor en la URL y el tipo es primitivo, asignar un valor por defecto
                             if (paramTypes[i] == int.class) {
                                 args[i] = 0;
                             } else if (paramTypes[i] == double.class) {
@@ -131,7 +128,7 @@ public class WebServer {
 
     public void handleStaticFileRequest(String path, OutputStream out) throws IOException {
         if (path.equals("/")) {
-            path = "/index.html"; // Si no se especifica archivo, se sirve index.html por defecto
+            path = "/index.html";
         }
 
         File file = new File(RESOURCE_PATH + path);

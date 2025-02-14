@@ -34,25 +34,17 @@ document.getElementById("getForm").addEventListener("submit", function (e) {
         .catch(error => console.error("Error al obtener los datos:", error));
 });
 
-document.getElementById("postForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const randomForm = document.getElementById("randomForm");
 
-    const data = {
-        message: document.getElementById("message").value
-    };
+    randomForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Evita la recarga de la página
 
-    try {
-        const response = await fetch("/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
-
-        const responseData = await response.text();
-        document.getElementById("postResponse").innerText = responseData;
-    } catch (error) {
-        console.error("Error en la solicitud POST:", error);
-    }
+        fetch("/random?min=1&max=100")
+            .then(number => number.text())
+            .then(data => {
+                document.getElementById("number").textContent = data;
+            })
+            .catch(error => console.error("Error al obtener el número aleatorio:", error));
+    });
 });
