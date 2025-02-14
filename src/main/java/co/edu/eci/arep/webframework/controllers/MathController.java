@@ -15,7 +15,8 @@ public class MathController {
         return Double.toString(Math.E);
     }
     @GetMapping("/random")
-    public static String random(@RequestParam(value = "min") double min, @RequestParam(value = "max") double max) {
-        return "El numero al azar que te toco es: " + (Math.random() * (max - min) + min);
+    public static String random(@RequestParam(value = "min") int min, @RequestParam(value = "max") int max) {
+        int randomNum = (int) (Math.random() * (max - min + 1) + min);
+        return "El número al azar que te tocó es: " + randomNum;
     }
 }

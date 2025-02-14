@@ -56,7 +56,7 @@ public class WebServer {
         }
     }
 
-    private boolean handleServiceRequest(String method, String path, OutputStream out) throws IOException {
+    public boolean handleServiceRequest(String method, String path, OutputStream out) throws IOException {
         String[] parts = path.split("\\?");
         String routePath = parts[0]; // La ruta sin los parámetros
         String query = parts.length > 1 ? parts[1] : null; // Los parámetros de la consulta
@@ -68,10 +68,40 @@ public class WebServer {
 
                 Object result;
                 if (query != null) {
-                    // Extraer parámetros de la consulta
                     Map<String, String> queryParams = getQueryParams(query);
-                    String paramValue = queryParams.getOrDefault("name", "World");
-                    result = routeMethod.invoke(controller, paramValue);
+
+                    // Obtener los tipos de parámetros esperados por el método
+                    Class<?>[] paramTypes = routeMethod.getParameterTypes();
+                    Object[] args = new Object[paramTypes.length];
+
+                    // Obtener los nombres de los parámetros desde las anotaciones (en lugar de getName())
+                    String[] paramNames = AnnotationProcessor.getParameterNames(routeMethod);
+
+                    for (int i = 0; i < paramTypes.length; i++) {
+                        String paramName = paramNames[i]; // Nombre del parámetro esperado
+                        String paramValue = queryParams.get(paramName); // Obtener el valor del parámetro en la URL
+
+                        if (paramValue != null) {
+                            if (paramTypes[i] == int.class) {
+                                args[i] = Integer.parseInt(paramValue);
+                            } else if (paramTypes[i] == double.class) {
+                                args[i] = Double.parseDouble(paramValue);
+                            } else {
+                                args[i] = paramValue; // Si es String, asignarlo directamente
+                            }
+                        } else {
+                            // Si no hay un valor en la URL y el tipo es primitivo, asignar un valor por defecto
+                            if (paramTypes[i] == int.class) {
+                                args[i] = 0;
+                            } else if (paramTypes[i] == double.class) {
+                                args[i] = 0.0;
+                            } else {
+                                args[i] = ""; // String vacío por defecto
+                            }
+                        }
+                    }
+
+                    result = routeMethod.invoke(controller, args);
                 } else {
                     result = routeMethod.invoke(controller);
                 }
@@ -87,7 +117,7 @@ public class WebServer {
         return false;
     }
 
-    private Map<String, String> getQueryParams(String query) {
+    public Map<String, String> getQueryParams(String query) {
         Map<String, String> queryParams = new HashMap<>();
         String[] pairs = query.split("&");
         for (String pair : pairs) {
@@ -99,7 +129,7 @@ public class WebServer {
         return queryParams;
     }
 
-    private void handleStaticFileRequest(String path, OutputStream out) throws IOException {
+    public void handleStaticFileRequest(String path, OutputStream out) throws IOException {
         if (path.equals("/")) {
             path = "/index.html"; // Si no se especifica archivo, se sirve index.html por defecto
         }
@@ -114,7 +144,7 @@ public class WebServer {
         }
     }
 
-    private String getMimeType(String path) {
+    public String getMimeType(String path) {
         if (path.endsWith(".html")) return "text/html";
         if (path.endsWith(".js")) return "application/javascript";
         if (path.endsWith(".css")) return "text/css";

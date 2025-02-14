@@ -1,11 +1,13 @@
 package co.edu.eci.arep.webframework;
 
 import co.edu.eci.arep.webframework.annotations.GetMapping;
+import co.edu.eci.arep.webframework.annotations.RequestParam;
 import co.edu.eci.arep.webframework.annotations.RestController;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,5 +52,11 @@ public class AnnotationProcessor {
 
     public static Object getController(Class<?> clazz) {
         return controllers.get(clazz.getName());
+    }
+
+    public static String[] getParameterNames(Method method) {
+        return Arrays.stream(method.getParameters())
+                .map(p -> p.getAnnotation(RequestParam.class).value())
+                .toArray(String[]::new);
     }
 }

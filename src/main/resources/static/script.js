@@ -27,9 +27,9 @@ document.getElementById("getForm").addEventListener("submit", function (e) {
     const responseDiv = document.getElementById("response");
 
     fetch(`/hello?name=${encodeURIComponent(name)}`)
-        .then(response => response.text())  // Cambié json() por text()
+        .then(response => response.text())
         .then(data => {
-            responseDiv.innerHTML = data;  // Mostramos el texto directamente
+            responseDiv.innerHTML = data;
         })
         .catch(error => console.error("Error al obtener los datos:", error));
 });

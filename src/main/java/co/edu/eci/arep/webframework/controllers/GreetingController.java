@@ -11,7 +11,7 @@ public class GreetingController {
         return "Hola! Bienvenido a mi servidor Web hecho en Java.";
     }
     @GetMapping("/later")
-    public static String bye() {
+    public static String later() {
         return "Nos vemos luego!";
     }
     @GetMapping("/hello")
