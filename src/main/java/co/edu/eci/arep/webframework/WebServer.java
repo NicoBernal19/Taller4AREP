@@ -7,11 +7,18 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class WebServer {
     private static final int PORT = 35000;
     private static final String RESOURCE_PATH = "src/main/resources";
     private static WebServer instance;
+    private ServerSocket serverSocket;
+    private boolean running = true;
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(10);
+
 
     private WebServer() {}
 
@@ -23,12 +30,40 @@ public class WebServer {
     }
 
     public void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+        try {
+            serverSocket = new ServerSocket(PORT);
             System.out.println("Servidor iniciado en http://localhost:" + PORT);
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                new Thread(() -> handleClient(clientSocket)).start();
+
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                System.out.println("\nApagando servidor...");
+                stopServer();
+            }));
+
+            while (running) {
+                try {
+                    Socket clientSocket = serverSocket.accept();
+                    threadPool.execute(() -> handleClient(clientSocket));
+                } catch (IOException e) {
+                    if (!running) {
+                        break;
+                    }
+                    e.printStackTrace();
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopServer() {
+        running = false;
+        threadPool.shutdown();
+
+        try {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                serverSocket.close();
+            }
+            System.out.println("Servidor detenido correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +128,7 @@ public class WebServer {
                             } else if (paramTypes[i] == double.class) {
                                 args[i] = 0.0;
                             } else {
-                                args[i] = ""; // String vacío por defecto
+                                args[i] = "";
                             }
                         }
                     }
@@ -147,8 +182,6 @@ public class WebServer {
         if (path.endsWith(".css")) return "text/css";
         if (path.endsWith(".png")) return "image/png";
         if (path.endsWith(".jpg") || path.endsWith(".jpeg")) return "image/jpeg";
-        if (path.endsWith(".gif")) return "image/gif";
-        if (path.endsWith(".svg")) return "image/svg+xml";
         return "application/octet-stream";
     }
 
