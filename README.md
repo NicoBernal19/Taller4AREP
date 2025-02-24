@@ -53,11 +53,11 @@ mvn test
 
 A continuacion se encuentran imagenes de la ejecucion de las pruebas:
 
-![imagen](src/main/resources/images/1.png)
+![imagen](src/main/resources/web/images/1.png)
 
-![imagen](src/main/resources/images/2.png)
+![imagen](src/main/resources/web/images/2.png)
 
-![imagen](src/main/resources/images/3.png)
+![imagen](src/main/resources/web/images/3.png)
 
 ### Pruebas en tiempo real
 
@@ -69,11 +69,11 @@ http://localhost:35000
 
 Una vez abierto el servidor web puedes navegar la pagina, probando las distintas funcionalidades. A continuacion encontramos algunos ejemplos de acciones que se pueden hacer:
 
-![imagen](src/main/resources/images/4.png)
+![imagen](src/main/resources/web/images/4.png)
 
-![imagen](src/main/resources/images/5.png)
+![imagen](src/main/resources/web/images/5.png)
 
-![imagen](src/main/resources/images/6.png)
+![imagen](src/main/resources/web/images/6.png)
 
 Por otro lado, puedes dirigirte al siguiente enlace (o uno similar) para probar la funcionalidad del saludo personalizado con tu nombre:
 

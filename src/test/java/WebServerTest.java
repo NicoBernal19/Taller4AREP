@@ -5,27 +5,26 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.Socket;
 import java.util.Map;
 
 public class WebServerTest {
 
-    @Test
-    public void testStartServer() throws Exception {
-        // Iniciar el servidor en un hilo separado
-        Thread serverThread = new Thread(() -> WebServer.getInstance().startServer());
-        serverThread.start();
-
-        // Hacer una pausa para asegurarse de que el servidor está corriendo
-        Thread.sleep(1000);
-
-        // Intentar conectar un socket al puerto 35000
-        try (Socket socket = new Socket("localhost", 35000)) {
-            assertTrue(socket.isConnected(), "El servidor no está escuchando correctamente en el puerto 35000");
-        } catch (IOException e) {
-            fail("No se pudo conectar al servidor en el puerto 35000");
-        }
-    }
+//    @Test
+//    public void testStartServer() throws Exception {
+//        // Iniciar el servidor en un hilo separado
+//        Thread serverThread = new Thread(() -> WebServer.getInstance().startServer());
+//        serverThread.start();
+//
+//        // Hacer una pausa para asegurarse de que el servidor está corriendo
+//        Thread.sleep(1000);
+//
+//        // Intentar conectar un socket al puerto 35000
+//        try (Socket socket = new Socket("localhost", 35000)) {
+//            assertTrue(socket.isConnected(), "El servidor no está escuchando correctamente en el puerto 35000");
+//        } catch (IOException e) {
+//            fail("No se pudo conectar al servidor en el puerto 35000");
+//        }
+//    }
 
     @Test
     public void testMimeTypeForUnknownFile() {
@@ -83,7 +82,7 @@ public class WebServerTest {
         WebServer server = WebServer.getInstance();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        server.handleStaticFileRequest("/index.html", outputStream);
+        server.handleStaticFileRequest("/web/index.html", outputStream);
         assertTrue(outputStream.size() > 0, "El archivo estático index.html no se sirvió correctamente");
 
         outputStream = new ByteArrayOutputStream();

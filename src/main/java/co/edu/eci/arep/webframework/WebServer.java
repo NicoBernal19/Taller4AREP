@@ -4,21 +4,18 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 public class WebServer {
-    private static final int PORT = 35000;
+    private static final int PORT = getPort();
     private static final String RESOURCE_PATH = "src/main/resources";
     private static WebServer instance;
     private ServerSocket serverSocket;
     private boolean running = true;
     private final ExecutorService threadPool = Executors.newFixedThreadPool(10);
-
 
     private WebServer() {}
 
@@ -27,6 +24,11 @@ public class WebServer {
             instance = new WebServer();
         }
         return instance;
+    }
+
+    private static int getPort() {
+        String portEnv = System.getenv("PORT");
+        return (portEnv != null) ? Integer.parseInt(portEnv) : 35000;
     }
 
     public void startServer() {
@@ -44,9 +46,7 @@ public class WebServer {
                     Socket clientSocket = serverSocket.accept();
                     threadPool.execute(() -> handleClient(clientSocket));
                 } catch (IOException e) {
-                    if (!running) {
-                        break;
-                    }
+                    if (!running) break;
                     e.printStackTrace();
                 }
             }
@@ -58,7 +58,6 @@ public class WebServer {
     public void stopServer() {
         running = false;
         threadPool.shutdown();
-
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
@@ -163,13 +162,13 @@ public class WebServer {
 
     public void handleStaticFileRequest(String path, OutputStream out) throws IOException {
         if (path.equals("/")) {
-            path = "/index.html";
+            path = "/web/index.html";
         }
 
-        File file = new File(RESOURCE_PATH + path);
-        if (file.exists() && !file.isDirectory()) {
+        InputStream fileStream = getClass().getClassLoader().getResourceAsStream("web" + path);
+        if (fileStream != null) {
             String mimeType = getMimeType(path);
-            byte[] fileContent = Files.readAllBytes(file.toPath());
+            byte[] fileContent = fileStream.readAllBytes();
             sendResponse(out, "200 OK", mimeType, fileContent);
         } else {
             sendResponse(out, "404 Not Found", "text/plain", "Archivo no encontrado".getBytes());
