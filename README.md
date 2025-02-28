@@ -47,19 +47,6 @@ Entre las funcionalidades que se ofrecen encontramos las siguientes:
 - Permite servir HTML, CSS, JS e imágenes.
 - Hace uso de las capacidades reflexivas de JAVA
 
-### Trabajo Realizado con Docker
-
-Lo primero es configurar el Dockerfile.
-
-Una vez ya configurado eso se debe crear la imagen:
-
-Luego creamos el contenedor con esa imagen que ya tenemos:
-
-Por ultimo, lo vamos a subir a un repositorio que vamos a crear en dockerHub:
-
-Con esto ya vamos a poder descargar y ejecutar la imagen facilmente:
-
-
 ## Pruebas
 
 ### Pruebas Unitarias
@@ -120,12 +107,66 @@ http://localhost:36000/styles.css
 http://localhost:36000/images/realMadrid.png
 ```
 
+### Trabajo Realizado con Docker
+
+Primero se debe crear la imagen:
+
+```
+docker build -t dockerwebapp .
+```
+
+Luego creamos el contenedor con esa imagen que ya tenemos:
+
+```
+docker run -d -p 34000:6000 --name firstdockercontainer dockerwebapp
+```
+En este caso correria por el puerto 34000.
+
+![image](https://github.com/user-attachments/assets/cb9683b6-2d29-4be4-9747-ba05cbd89f7b)
+
+Asi es como quedo en DockerDesktop:
+
+![image](https://github.com/user-attachments/assets/0c68e6da-0136-4be7-86b4-e5d01d669cee)
+
+Por ultimo, lo vamos a subir a un repositorio que vamos a crear en dockerHub:
+
+![image](https://github.com/user-attachments/assets/b38a13e2-593c-494b-a2bb-bfcfa7b52605)
+
+Con esto ya vamos a poder descargar y ejecutar la imagen facilmente:
+
+```
+tag dockerwebapp nicobernal19/firstdockerrepo
+docker push nicobernal19/firstdockerrepo:latest
+```
+
 ### Despliegue en AWS
 
 Debemos crear una instancia en AWS. Una vez ya tengamos esto vamos a acceder a la maquina virtual, para hacerlo yo use PuTTy.
 
-Dentro de la maquina virtual vamos a instalar docker y luego debemos iniciar el servicio.
+![image](https://github.com/user-attachments/assets/65bed5ad-ac35-494c-a382-1c1385376662)
+
+![image](https://github.com/user-attachments/assets/dcb77ee7-6c4f-457c-b24d-c48f6c439eaa)
+
+Dentro de la maquina virtual vamos a instalar docker y luego debemos iniciar el servici:
+
+![image](https://github.com/user-attachments/assets/811a0bd8-7642-4f65-bcd4-de1734e58ce6)
+
+![image](https://github.com/user-attachments/assets/f2416879-ee5a-4ec5-904f-9f38389be57a)
 
 A partir de la imagen que subimos a nuestro repositorio de DockerHub vamos a crear un contenedor:
 
+![image](https://github.com/user-attachments/assets/b4cb296c-3998-48c2-b5b5-79f5a5afbced)
+
+En este caso el servidor desplegado en AWS va a correr por el puerto 37000.
+
 Si es necesario (en mi caso lo fue) debemos ir al security group de la instancia de AWS que estamos utilizando y debemos ajustar las reglas de entrada para que permita navegar correctamente por el servidor.
+
+![image](https://github.com/user-attachments/assets/6975312b-5c49-40fa-8d56-5f889ba73812)
+
+Ya quedo desplegado correctamente:
+
+![image](https://github.com/user-attachments/assets/947e4ead-abbd-4a67-afb4-105157bca3a5)
+
+### Video Explicatorio
+
+
