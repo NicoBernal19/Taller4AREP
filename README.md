@@ -1,4 +1,4 @@
-# Servidor Web hecho en Java
+# Servidor Web hecho en Java Para Desplegar en Docker y AWS
 
 El objetivo de este proyecto es continuar con el desarrollo y mejora de la aplicacion web que he venido desarrollando en Java. El objetivo es mejorar y desplegar el framework propio que he hecho en AWS utilizando EC2 y Docker.
 
@@ -48,7 +48,6 @@ Entre las funcionalidades que se ofrecen encontramos las siguientes:
 
 ## Estructura del Proyecto
 
-WebFrameworkDocker
 ```
 │──  src
 │   ├──  main
