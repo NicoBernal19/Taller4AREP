@@ -169,4 +169,4 @@ Ya quedo desplegado correctamente:
 
 ### Video Explicatorio
 
-
+![video](https://github.com/usuario/repo/raw/main/carpeta/video.mp4)
