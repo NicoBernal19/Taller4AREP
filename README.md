@@ -1,10 +1,6 @@
 # Servidor Web hecho en Java
 
-Este proyecto tiene como objetivo el desarrollo de un servidor web en Java, similar a Apache, capaz de entregar páginas HTML e imágenes en formato PNG. Además, el servidor incluirá un framework IoC (Inversión de Control) que permitirá la construcción de aplicaciones web a partir de POJOs (Plain Old Java Objects).
-
-Como parte de la implementación, se desarrollará una aplicación web de ejemplo utilizando el servidor. El servidor será capaz de atender múltiples solicitudes de manera no concurrente.
-
-Para demostrar las capacidades reflexivas de Java, se implementará un prototipo mínimo que permita la carga dinámica de un bean (POJO) y la generación de una aplicación web basada en él.
+El objetivo de este proyecto es continuar con el desarrollo y mejora de la aplicacion web que he venido desarrollando en Java. El objetivo es mejorar y desplegar el framework propio que he hecho en AWS utilizando EC2 y Docker.
 
 ## Autor
 
@@ -46,6 +42,35 @@ Entre las funcionalidades que se ofrecen encontramos las siguientes:
 
 - Permite servir HTML, CSS, JS e imágenes.
 - Hace uso de las capacidades reflexivas de JAVA
+- Es concurrente, puede soportar distintos clientes y solicitudes a la vez usando hilos.
+- Cuenta con un apagado elegante para el servidor.
+- Permite su facil despliegue en Docker.
+
+## Estructura del Proyecto
+
+WebFrameworkDocker
+```
+│──  src
+│   ├──  main
+│   │   ├──  java
+│   │   │   └──  co.edu.eci.arep.webframework
+│   │   │       ├──  annotations
+│   │   │       │   ├── GetMapping.java
+│   │   │       │   ├── RequestParam.java
+│   │   │       │   ├── RestController.java
+│   │   │       ├──  controllers
+│   │   │       │   ├── GreetingController.java
+│   │   │       │   ├── MathController.java
+│   │   │       ├── AnnotationProcessor.java
+│   │   │       ├── WebFramework.java
+│   │   │       ├── WebServer.java
+│   │   ├──  resources
+│   │   │   ├──  web
+│   │   │   │   ├──  images
+│   │   │   │   ├── index.html
+│   │   │   │   ├── script.js
+│   │   │   │   ├── styles.css
+```
 
 ## Pruebas
 
@@ -168,5 +193,9 @@ Ya quedo desplegado correctamente:
 ![image](https://github.com/user-attachments/assets/947e4ead-abbd-4a67-afb4-105157bca3a5)
 
 ### Video Explicatorio
+
+https://github.com/user-attachments/assets/90dd0e4a-b0eb-48ca-bc40-518c480534f4
+
+Aqui puedes descargarlo por si no se esta viendo:
 
 ![video](src/main/resources/web/images/VideoDespliegueDocker-AWS.mp4)
